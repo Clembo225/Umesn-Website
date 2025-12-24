@@ -1,0 +1,176 @@
+/* Fullscreen TV static canvas */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: black;
+  font-family: Tahoma, sans-serif;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* XP-style box */
+.xp-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Use CSS variables for offsets */
+  --shake-x: 0px;
+  --drag-x: 0px;
+  --drag-y: 0px;
+  transform: translate(calc(-50% + var(--drag-x) + var(--shake-x)), calc(-50% + var(--drag-y)));
+  width: 300px;
+  border: 2px solid #000080;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+  background: #c0c0c0;
+  z-index: 1;
+}
+
+.xp-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to bottom, #000080, #0000aa);
+  color: white;
+  padding: 4px 8px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: move; /* draggable */
+}
+
+.xp-close {
+  background: #c0c0c0;
+  border: 1px solid #fff;
+  width: 20px;
+  height: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.xp-close:hover {
+  background: #ff0000;
+  color: white;
+}
+
+.xp-content {
+  padding: 15px;
+  text-align: center;
+}
+
+.xp-content input {
+  width: 90%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 2px inset #fff;
+  box-sizing: border-box;
+}
+
+.xp-content button {
+  width: 90%;
+  padding: 5px;
+  border: 2px outset #fff;
+  background: #c0c0c0;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.xp-content button:hover {
+  background: #e0e0e0;
+}
+
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 14px;
+  display: none; /* hidden by default */
+}
+
+@keyframes shake {
+  0%   { --shake-x: 0px; }
+  10%  { --shake-x: -16px; }
+  20%  { --shake-x: 16px; }
+  30%  { --shake-x: -12px; }
+  40%  { --shake-x: 12px; }
+  50%  { --shake-x: -6px; }
+  60%  { --shake-x: 6px; }
+  70%  { --shake-x: -2px; }
+  80%  { --shake-x: 2px; }
+  90%  { --shake-x: -1px; }
+  100% { --shake-x: 0px; }
+}
+
+.xp-box.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+
+#success-msg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  color: #ff0000;
+  font-size: 48px;
+  font-family: Tahoma, sans-serif;
+  font-weight: bold;
+  text-shadow: 0 0 8px #ff0000, 0 0 16px #ff0000;
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Animation when shown */
+#success-msg.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.2);
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 8px #fff700, 0 0 16px #fff700; }
+  to { text-shadow: 0 0 16px #fff700, 0 0 32px #fff700; }
+}
+
+
+#tv-off {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 1s ease-in;
+}
+
+/* Video container styling */
+#video-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  display: none; /* hidden initially */
+}
+
+#video-container iframe {
+  width: 80vw;
+  height: 45vw; /* 16:9 ratio */
+  max-width: 1280px;
+  max-height: 720px;
+  border: none;
+}
+

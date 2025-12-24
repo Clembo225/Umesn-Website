@@ -1,44 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" rel="stylesheet">
-
   <meta charset="UTF-8">
-  <title>Umesn Official</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: black;
-      display: flex;
-      flex-direction: column;        /* stack items vertically */
-      justify-content: space-between; /* top ↔ bottom spacing */
-      align-items: center;
-      height: 100vh;
-    }
-
-    img {
-      max-width: 80%;
-      max-height: 80%;
-      margin-top: auto;  /* centers logo vertically */
-      margin-bottom: auto;
-    }
-
-    footer {
-      font-family: 'Oswald', sans-serif;
-      margin-bottom: 20px;
-      font-size: 42px;
-      color: #FF340A;
-      text-align: center;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Umesn Offiziell</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <img src="logo.png" alt="Logo">
+  <canvas id="noise"></canvas>
 
-  <footer>
-    Neue Single tut bald erscheinen tun...
-  </footer>
+  <div class="xp-box">
+    <div class="xp-titlebar">
+      <span>Umesn Sicherheitskonzept</span>
+      <button class="xp-close" >X</button>
+    </div>
+    <div class="xp-content">
+      <p>Passwöat:</p>
+      <input type="password" id="password">
+      <button onclick="checkPassword()">OK</button>
+      <p id="error-msg" class="error-message"></p> 
+    </div>
+  </div>
+
+  <div id="success-msg">JAWOLLO!</div>
+  
+  <!-- VIDEO CONTAINER -->
+  <div id="video-container"></div>
+  <script src="noise.js"></script>
+  <script src="xp.js"></script>
 </body>
 </html>
