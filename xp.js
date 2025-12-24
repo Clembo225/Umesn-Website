@@ -111,3 +111,45 @@ function showSuccessSequence() {
     }, 1000); // logo fall duration
   }, 2000); // success message display duration
 }
+
+
+// ❄️ Natural, continuous snowfall (no burst)
+function startSnow() {
+  spawnSnowflake(); // start the loop
+}
+
+function spawnSnowflake() {
+  const snowLayer = document.getElementById("snow-layer");
+  if (!snowLayer) return;
+
+  const snowflake = document.createElement("div");
+  snowflake.className = "snowflake";
+  snowflake.textContent = ["❄", "❅", "❆"][Math.floor(Math.random() * 3)];
+
+  // Large flakes
+  const size = Math.random() * 30 + 30; // 30–60px
+  snowflake.style.fontSize = size + "px";
+
+  // Random horizontal position (even slightly off-screen)
+  snowflake.style.left = Math.random() * 110 - 5 + "vw";
+
+  // Random speed
+  const duration = Math.random() * 10 + 10; // 10–20s
+  snowflake.style.animationDuration = duration + "s";
+
+  // Random sideways drift
+  const drift = Math.random() * 160 - 80;
+  snowflake.style.setProperty("--drift", drift + "px");
+
+  snowLayer.appendChild(snowflake);
+
+  snowflake.addEventListener("animationend", () => {
+    snowflake.remove();
+  });
+
+  // Random delay before next snowflake
+  const nextDelay = Math.random() * 300 + 120; // 0.3–0.9s
+  setTimeout(spawnSnowflake, nextDelay);
+}
+
+
