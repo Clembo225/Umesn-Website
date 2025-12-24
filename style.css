@@ -174,3 +174,43 @@ canvas {
   border: none;
 }
 
+/* Christmas message */
+#message-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 80%;
+  text-align: center;
+  font-family: 'Pacifico', cursive;
+  font-size: 48px;
+  color: #cc0000;
+  text-shadow: 0 0 10px rgba(255,0,0,0.6);
+  opacity: 0;
+  z-index: 4;
+  transition: opacity 1.5s ease;
+  pointer-events: none;
+}
+
+/* Show message */
+#message-container.show {
+  opacity: 1;
+}
+
+/* Snowflakes */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 14px;
+  opacity: 0.8;
+  user-select: none;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}

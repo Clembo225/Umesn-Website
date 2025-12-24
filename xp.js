@@ -96,12 +96,17 @@ function showSuccessSequence() {
         if(xpBox) xpBox.remove();
         success.remove();
 
-        const videoContainer = document.getElementById("video-container");
-        videoContainer.style.display = "block";
-        videoContainer.innerHTML = `
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/LLXeXwJX8UA?si=vZK6hB-toHfZOu1G" title="YouTube video player" frameborder="0" allow="accelerometer;
-           autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        `;
+        // const videoContainer = document.getElementById("video-container");
+        // videoContainer.style.display = "block";
+        //videoContainer.innerHTML = `
+          //<iframe width="560" height="315" src="https://www.youtube.com/embed/LLXeXwJX8UA?si=vZK6hB-toHfZOu1G" title="YouTube video player" frameborder="0" allow="accelerometer;
+           //autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        //`;
+        const message = document.getElementById("message-container");
+        message.classList.add("show");
+
+        // start snow
+        startSnow();
       }, 1500); // TV-off duration
     }, 1000); // logo fall duration
   }, 2000); // success message display duration
