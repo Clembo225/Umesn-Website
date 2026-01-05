@@ -111,13 +111,13 @@ function showSuccessSequence() {
 }
 
 function revealVideo() {
+  const wrapper = document.getElementById("video-wrapper");
   const video = document.getElementById("trailer-video");
-  const container = document.getElementById("video-container");
 
-  // Play video (muted for autoplay)
+  // Show wrapper
+  wrapper.classList.add("show");
+
+  // Autoplay video (muted so it works on mobile)
   video.muted = true;
-  video.play().catch(() => {});
-
-  // Fade in
-  container.classList.add("show");
+  video.play().catch(() => {}); // avoid errors if autoplay is blocked
 }
