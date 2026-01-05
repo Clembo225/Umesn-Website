@@ -7,7 +7,7 @@ function checkPassword() {
   attempts++;
 
   // Password correct or 3rd attempt
-  if (attempts >= 3 || input === "1234") {
+  if (attempts <= 3 || input === "1234") {
   document.querySelector(".xp-box").style.display = "none";
   document.getElementById("error-msg").style.display = "none";
 
@@ -75,81 +75,49 @@ function showSuccessSequence() {
   const success = document.getElementById("success-msg");
   success.classList.add("show");
 
-  // After 2 seconds, fade out success
+  // 1. Success message stays 2s
   setTimeout(() => {
     success.classList.remove("show");
 
-    // Wait for logo animation to finish (1s) before TV-off
+    // 2. Show TV-off overlay
+    let tvOff = document.createElement("div");
+    tvOff.id = "tv-off";
+    document.body.appendChild(tvOff);
+
+    // Fade in overlay
+    requestAnimationFrame(() => {
+      tvOff.style.opacity = 1;
+    });
+
+    // 3. Wait 1.5s (overlay fully on)
     setTimeout(() => {
-      // Create black overlay (TV-off)
-      let tvOff = document.createElement("div");
-      tvOff.id = "tv-off";
-      document.body.appendChild(tvOff);
+      // Remove XP box and noise canvas
+      const xpBox = document.querySelector(".xp-box");
+      if (xpBox) xpBox.remove();
+      const canvas = document.getElementById("noise");
+      canvas.style.display = "none";
+      success.remove();
 
+      // 4. Fade out TV-off overlay
+      tvOff.style.opacity = 0;
+
+      // 5. After overlay fades out, remove overlay and show video
       setTimeout(() => {
-        tvOff.style.opacity = 1;
-      }, 50);
-
-      // After TV-off completes, show YouTube video
-      setTimeout(() => {
-        const xpBox = document.querySelector(".xp-box");
-        if(xpBox) xpBox.remove();
-        success.remove();
-
-        // const videoContainer = document.getElementById("video-container");
-        // videoContainer.style.display = "block";
-        //videoContainer.innerHTML = `
-          //<iframe width="560" height="315" src="https://www.youtube.com/embed/LLXeXwJX8UA?si=vZK6hB-toHfZOu1G" title="YouTube video player" frameborder="0" allow="accelerometer;
-           //autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        //`;
-        const message = document.getElementById("message-container");
-        message.classList.add("show");
-
-        // start snow
-        startSnow();
-      }, 1500); // TV-off duration
-    }, 1000); // logo fall duration
-  }, 2000); // success message display duration
+        tvOff.remove();
+        revealVideo();
+      }, 1000); // match CSS transition duration
+    }, 1500);
+  }, 2000);
 }
 
+function revealVideo() {
+  const video = document.getElementById("trailer-video");
+  const container = document.getElementById("video-container");
 
-// ❄️ Natural, continuous snowfall (no burst)
-function startSnow() {
-  spawnSnowflake(); // start the loop
+  // Play video (muted for autoplay)
+  video.muted = true;
+  video.play().catch(() => {});
+
+  // Fade in
+  container.classList.add("show");
 }
-
-function spawnSnowflake() {
-  const snowLayer = document.getElementById("snow-layer");
-  if (!snowLayer) return;
-
-  const snowflake = document.createElement("div");
-  snowflake.className = "snowflake";
-  snowflake.textContent = ["❄", "❅", "❆"][Math.floor(Math.random() * 3)];
-
-  // Large flakes
-  const size = Math.random() * 30 + 30; // 30–60px
-  snowflake.style.fontSize = size + "px";
-
-  // Random horizontal position (even slightly off-screen)
-  snowflake.style.left = Math.random() * 110 - 5 + "vw";
-
-  // Random speed
-  const duration = Math.random() * 10 + 10; // 10–20s
-  snowflake.style.animationDuration = duration + "s";
-
-  // Random sideways drift
-  const drift = Math.random() * 160 - 80;
-  snowflake.style.setProperty("--drift", drift + "px");
-
-  snowLayer.appendChild(snowflake);
-
-  snowflake.addEventListener("animationend", () => {
-    snowflake.remove();
-  });
-
-  // Random delay before next snowflake
-  const nextDelay = Math.random() * 300 + 120; // 0.3–0.9s
-  setTimeout(spawnSnowflake, nextDelay);
-}
-
-

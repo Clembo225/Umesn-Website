@@ -115,12 +115,14 @@ canvas {
 
 
 #success-msg {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
+  text-align: center;
+  line-height: 1.2;
   transform: translate(-50%, -50%) scale(0.8);
   color: #ff0000;
-  font-size: 48px;
+  font-size: 40px;
   font-family: Tahoma, sans-serif;
   font-weight: bold;
   text-shadow: 0 0 8px #ff0000, 0 0 16px #ff0000;
@@ -151,73 +153,51 @@ canvas {
   height: 100%;
   background: black;
   opacity: 0;
-  z-index: 3;
+  z-index: 15;
   pointer-events: none;
   transition: opacity 1s ease-in;
 }
 
-/* Video container styling */
-#video-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 4;
-  display: none; /* hidden initially */
-}
 
-#video-container iframe {
-  width: 80vw;
-  height: 45vw; /* 16:9 ratio */
-  max-width: 1280px;
-  max-height: 720px;
-  border: none;
-}
-
-/* Christmas message */
-#message-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 80%;
-  text-align: center;
-  font-family: 'Pacifico', cursive;
-  font-size: 48px;
-  color: #cc0000;
-  text-shadow: 0 0 10px rgba(255,0,0,0.6);
-  opacity: 0;
-  z-index: 4;
-  transition: opacity 1.5s ease;
-  pointer-events: none;
-}
 
 /* Show message */
 #message-container.show {
   opacity: 1;
 }
 
-/* Snowflakes */
-.snowflake {
-  position: absolute;
-  top: -20px;
-  color: white;
-  opacity: 0.9;
-  user-select: none;
-  animation: fall linear forwards;
+#video-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* center container horizontally & vertically */
+  width: 80vw;   /* or 100vw if full screen */
+  height: 45vw;  /* maintains 16:9 ratio; adjust as needed */
+  max-width: 1280px;
+  max-height: 720px;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
 }
 
-@keyframes fall {
-  to {
-    transform: translateY(110vh) translateX(var(--drift));
-  }
+#video-container.show {
+  opacity: 1;
+  pointer-events: auto;
 }
-#snow-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
+
+#trailer-video {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+#video-message {
+  position: absolute;
+  top: -60px;      /* distance from bottom of video */
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 32px;
+  text-shadow: 0 0 5px black; /* makes text visible on bright videos */
   pointer-events: none;
-  z-index: 10; /* ABOVE tv-off, message, everything */
+  font-family: Arial, Helvetica, sans-serif;
 }
